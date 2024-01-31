@@ -2,9 +2,44 @@
   display: grid;
   width: 70%;
   margin: auto;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr); 
+  grid-auto-rows: 1fr; 
   justify-content: center;
-  align-items: center;
+  align-items: stretch; 
   gap: 8px;
   margin-top: 5vh;
+  margin-bottom: 5vh;
+
+  p {
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    font-size: 1em;
+  }
+
+  h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+}
+
+.ticketCard {
+  background-color: #f9f9f9; 
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+}
+
+.ticketName {
+  font-weight: bold; 
+}
+
+.ticketPrice {
+  color: #ffb203; 
 }

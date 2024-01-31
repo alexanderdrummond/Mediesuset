@@ -2,7 +2,6 @@ import { useState } from "react";
 import { EventBar } from "../../components/EventBar/EventBar";
 import { EventCard } from "../../components/EventCard/EventCard";
 import { Title } from "../../components/Title/Title";
-import { Modal } from "../../components/Modal/Modal";
 import { getDayFromDate } from "../../helpers/getDayFromDate";
 import { getEventColor } from "../../helpers/getEventColor";
 import { useFetch } from "../../hooks/useFetch";
