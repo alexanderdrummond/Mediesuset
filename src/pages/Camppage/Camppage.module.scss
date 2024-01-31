@@ -1,0 +1,10 @@
+.campWrapper {
+  display: grid;
+  width: 70%;
+  margin: auto;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5vh;
+}

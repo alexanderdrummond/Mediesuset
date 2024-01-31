@@ -6,7 +6,7 @@ export const NewsCard = ({ imgSrc, title, text, handleModal }) => {
       <img src={imgSrc}></img>
       <section>
         <h3>{title}</h3>
-        <p>{text}</p>
+        {text && <p>{text}</p>}
         <button onClick={() => handleModal()}>Læs mere</button>
       </section>
     </div>

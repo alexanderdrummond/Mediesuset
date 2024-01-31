@@ -9,8 +9,8 @@ export const Modal = ({ handleModal, isModalOpen, children }) => {
         <>
           <div className={style.modalBg}>
             <section className={style.modalStyle}>
+              <button onClick={handleModal}>X</button>
               {children}
-              <button onClick={handleModal}>Close</button>
             </section>
           </div>
         </>

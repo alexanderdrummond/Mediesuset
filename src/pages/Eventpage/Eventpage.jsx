@@ -7,13 +7,16 @@ import { getDayFromDate } from "../../helpers/getDayFromDate";
 import { getEventColor } from "../../helpers/getEventColor";
 import { useFetch } from "../../hooks/useFetch";
 import style from "../Eventpage/Eventpage.module.scss";
+import { Modal } from "../../components/Modal/Modal";
 
 export const Eventpage = () => {
+  const [eventID, setEventID] = useState(2);
+  const [selectedEvent, setSelectedEvent] = useState("0");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const events = useFetch("https://api.mediehuset.net/mediesuset/events");
-  const [isModalOpen, setIsModalOpen] = useState(false); 
-  const [selectedEventID, setSelectedEventID] = useState(null); 
-  const eventDetails = useFetch(`https://api.mediehuset.net/mediesuset/events/${selectedEventID}`);
-
+  const eventDetails = useFetch(
+    `https://api.mediehuset.net/mediesuset/events/${eventID}`
+  );
   const daysInWeek = [
     "Mandag",
     "Tirsdag",
@@ -24,11 +27,13 @@ export const Eventpage = () => {
     "Søndag",
   ];
 
-  const [selectedEvent, setSelectedEvent] = useState("0");
-
-  const handleModal = (id) => {
-    setSelectedEventID(id);
+  const handleModal = () => {
     setIsModalOpen(!isModalOpen);
+  };
+
+  const handleEventID = (id) => {
+    handleModal();
+    setEventID(id);
   };
 
   return (
@@ -45,7 +50,10 @@ export const Eventpage = () => {
                   key={item.id}
                   title={item.title}
                   image={item.image}
-                  date={`${daysInWeek[getDayFromDate(item.local_time)]} kl. ${item.local_time.substring(11, 16)}`}
+                  setEventID={() => handleEventID(item.id)}
+                  date={`${
+                    daysInWeek[getDayFromDate(item.local_time)]
+                  } kl. ${item.local_time.substring(11, 16)}`}
                   stageColor={getEventColor(item.stage_id)}
                  
                 />
@@ -58,20 +66,27 @@ export const Eventpage = () => {
           <h3>Could not load events - try again</h3>
         )}
       </section>
-      {isModalOpen && (
-        <Modal handleModal={() => handleModal(null)} isModalOpen={isModalOpen}>
-        
-          <figure className={style.eventDetailsWrapper}>
-            <img src={eventDetails?.item.image} alt={eventDetails?.item.title} />
-            <figcaption>
-              <h4>{eventDetails?.item.title}</h4>
-              <p>{eventDetails?.item.description}</p>
-              <p>{`${eventDetails?.item.stage_name}`}</p>
-              <p>{`${new Date(eventDetails?.item.datetime * 1000).toString()}`}</p>
-            </figcaption>
-          </figure>
-        </Modal>
-      )}
+
+      <Modal isModalOpen={isModalOpen} handleModal={handleModal}>
+        <article className={style.eventModalWrapper}>
+          <h3
+            style={{
+              backgroundColor: getEventColor(eventDetails?.item?.stage_id),
+            }}
+          >
+            {eventDetails?.item?.stage_name}{" "}
+            {daysInWeek[getDayFromDate(eventDetails?.item?.local_time)]} kl.{" "}
+            {eventDetails?.item?.local_time.substring(11, 16)}
+          </h3>
+          <div>
+            <img
+              src={eventDetails?.item?.image}
+              alt={eventDetails?.item?.title}
+            />
+            <p>{eventDetails?.item?.description}</p>
+          </div>
+        </article>
+      </Modal>
     </>
   );
 };

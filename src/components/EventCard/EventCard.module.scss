@@ -3,10 +3,11 @@
   align-items: center;
   justify-content: start;
   width: 100%;
+  cursor: pointer;
   div {
     position: relative;
     height: 260px;
-    width: 380px;
+    width: 360px;
     img {
       position: absolute;
       top: 0;
@@ -24,11 +25,22 @@
     color: white;
     background-color: black;
     padding: 8px;
+    cursor: pointer;
     p:nth-child(1) {
       font-size: 1.6rem;
     }
     p:nth-child(2) {
       font-size: 1.2rem;
     }
+    p:nth-child(3) {
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+  }
+}
+
+.eventCardStyle:hover {
+  p:nth-child(3) {
+    opacity: 1;
   }
 }

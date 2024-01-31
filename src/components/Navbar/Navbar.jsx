@@ -12,22 +12,22 @@ export const Navbar = () => {
 
       <ul>
         <li>
-          <NavLink to="/forside">Forside</NavLink>
+          <NavLink to="/forside">FORSIDE</NavLink>
         </li>
         <li>
-          <NavLink to="/events">Events</NavLink>
+          <NavLink to="/events">EVENTS</NavLink>
         </li>
         <li>
-          <NavLink to="/camps">Camps</NavLink>
+          <NavLink to="/camps">CAMPS</NavLink>
         </li>
         <li>
-          <NavLink to="/billetter">Billetter</NavLink>
+          <NavLink to="/billetter">BILLETTER</NavLink>
         </li>
         <li>
-          <NavLink to="/info">Praktisk Info</NavLink>
+          <NavLink to="/info">PRAKTISK INFO</NavLink>
         </li>
         <li>
-          <NavLink to="/login">Login</NavLink>
+          <NavLink to="/login">LOGIN</NavLink>
         </li>
       </ul>
     </nav>

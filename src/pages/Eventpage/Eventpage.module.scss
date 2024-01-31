@@ -7,6 +7,33 @@
   margin-top: 5vh;
   margin-bottom: 5vh;
 }
+
+.eventModalWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  h3 {
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+    width: -webkit-fill-available;
+    height: 6vh;
+    color: white;
+    font-size: 2rem;
+  }
+
+  img {
+    width: 100%;
+  }
+}
+
 @media only screen and (max-width: 1467px) {
   .eventPageWrapper {
     grid-template-columns: 1fr 1fr;

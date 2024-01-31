@@ -15,4 +15,15 @@
   z-index: 3;
   background-color: rgb(240, 240, 240);
   margin-top: 20vh;
+  padding: 16px;
+  display: grid;
+  position: relative;
+  button {
+    position: absolute;
+    top: -12px;
+    right: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 2rem;
+  }
 }
