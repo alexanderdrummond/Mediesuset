@@ -1,17 +1,14 @@
-import React from 'react';
-import style from './CampCard.module.scss'; 
+import style from "./CampCard.module.scss";
 
-const CampCard = ({ title, imgSrc, text, onReadMore }) => {
+export const CampCard = ({ children, title, imgSrc, handleModal }) => {
   return (
-    <div className={style.campCard}>
-      <img src={imgSrc} alt={title} />
-      <div className={style.cardContent}>
-        <h2>{title}</h2>
-        {text}
-        <button className={style.readMoreButton} onClick={onReadMore}>læs mere</button>
-      </div>
+    <div className={style.campCardStyle}>
+      <img src={imgSrc}></img>
+      <section>
+        <h3>{title}</h3>
+        {children}
+        <button onClick={() => handleModal()}>Læs mere</button>
+      </section>
     </div>
   );
 };
-
-export default CampCard;

@@ -1,60 +1,82 @@
-import CampCard from "../../components/CampCard/CampCard";
-import CampModal from "../../components/CampModal/CampModal";
+import { useState } from "react";
+import { CampCard } from "../../components/CampCard/CampCard";
+import { NewsCard } from "../../components/NewsCard/NewsCard";
 import { Title } from "../../components/Title/Title";
 import { useFetch } from "../../hooks/useFetch";
 import style from "./Camppage.module.scss";
-import { useState } from "react";
+import { Modal } from "../../components/Modal/Modal";
 
 export const Camppage = () => {
+  const [isModalOpen, setIsModalOpen] = useState();
+  const [selectedCamp, setSelectedCamp] = useState(1);
   const camps = useFetch("https://api.mediehuset.net/mediesuset/camps");
-  const [selectedCamp, setSelectedCamp] = useState(null);
-
-  const handleReadMore = (camp) => {
-    setSelectedCamp(camp);
+  const singleCamp = useFetch(
+    `https://api.mediehuset.net/mediesuset/camps/${selectedCamp}`
+  );
+  const handleModal = (id) => {
+    if (typeof id === "string" || typeof id === "number") {
+      setSelectedCamp(id);
+    }
+    setIsModalOpen(!isModalOpen);
   };
 
-  const handleCloseModal = () => {
-    setSelectedCamp(null);
-  };
-
-
-  console.log(camps);
-
+  console.log(singleCamp);
   return (
     <>
       <Title title={"Camps"} />
       <section className={style.campWrapper}>
         {camps?.items.map((item) => {
-          const textContent = (
-            <>
-              <p>
-                {item.name} er en camp med plads til {item.num_people}.
-              </p>
-              <h3>Følgende
-                armbånd giver adgang til denne camp:</h3>
-              <div>
-                {item.tickets.map((ticket) => (
-                  <div key={ticket.id} className={style.ticketCard}>
-                    <span className={style.ticketName}>{ticket.name}</span>
-                    <span className={style.ticketPrice}>{ticket.price} DKK</span>
-                  </div>
-                ))}
-              </div>
-            </>
-          );
-
           return (
             <CampCard
               key={item.id}
+              handleModal={() => handleModal(item.id)}
               title={item.name}
               imgSrc={item.image}
-              text={textContent}
-              onReadMore={() => handleReadMore(item)}
-            />
+            >
+              <>
+                <p>
+                  {item.name} er en camp med plads til {item.num_people}.
+                  Følgende armbånd giver adgang til denne camp:
+                </p>
+                <ul>
+                  {item.tickets.map((item) => {
+                    return (
+                      <li key={item.id}>
+                        {item.name + " - " + item.price + " DKK"}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </>
+            </CampCard>
           );
         })}
       </section>
-      {selectedCamp && <CampModal camp={selectedCamp} onClose={handleCloseModal} />}
+      <Modal topPos={"5vh"} handleModal={handleModal} isModalOpen={isModalOpen}>
+        <section className={style.modalWrapper}>
+          <h2>{singleCamp?.item?.name}</h2>
+          <div>
+            <img src={singleCamp?.item?.image}></img>
+
+            <div>
+              {singleCamp?.item?.tickets.map((ticket) => {
+                return (
+                  <p>
+                    {ticket.name} - Kun: {ticket.price || "???"} DKK
+                  </p>
+                );
+              })}
+            </div>
+          </div>
+          <p>{singleCamp?.item?.description}</p>
+          <h3>Faciliteter: </h3>
+          <ul>
+            {singleCamp?.item?.facilities?.map((facility) => {
+              return <li>{facility.title}</li>;
+            })}
+          </ul>
+        </section>
+      </Modal>
     </>
   );
 };
